@@ -1,0 +1,510 @@
+---
+# Source: demo-chart/charts/microservice1/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice1
+  labels:
+    helm.sh/chart: microservice1-0.1.0
+    app.kubernetes.io/name: microservice1
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: demo-chart/charts/microservice2/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice2
+  labels:
+    helm.sh/chart: microservice2-0.1.0
+    app.kubernetes.io/name: microservice2
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: demo-chart/charts/microservice3/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice3
+  labels:
+    helm.sh/chart: microservice3-0.1.0
+    app.kubernetes.io/name: microservice3
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: demo-chart/charts/microservice4/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice4
+  labels:
+    helm.sh/chart: microservice4-0.1.0
+    app.kubernetes.io/name: microservice4
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: demo-chart/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-chart
+  labels:
+    helm.sh/chart: demo-chart-0.1.0
+    app.kubernetes.io/name: demo-chart
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: demo-chart/charts/microservice1/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice1
+  labels:
+    helm.sh/chart: microservice1-0.1.0
+    app.kubernetes.io/name: microservice1
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: microservice1
+    app.kubernetes.io/instance: demo-chart
+---
+# Source: demo-chart/charts/microservice2/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice2
+  labels:
+    helm.sh/chart: microservice2-0.1.0
+    app.kubernetes.io/name: microservice2
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: microservice2
+    app.kubernetes.io/instance: demo-chart
+---
+# Source: demo-chart/charts/microservice3/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice3
+  labels:
+    helm.sh/chart: microservice3-0.1.0
+    app.kubernetes.io/name: microservice3
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: microservice3
+    app.kubernetes.io/instance: demo-chart
+---
+# Source: demo-chart/charts/microservice4/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: microservice4
+  labels:
+    helm.sh/chart: microservice4-0.1.0
+    app.kubernetes.io/name: microservice4
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: microservice4
+    app.kubernetes.io/instance: demo-chart
+---
+# Source: demo-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-chart
+  labels:
+    helm.sh/chart: demo-chart-0.1.0
+    app.kubernetes.io/name: demo-chart
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: demo-chart
+    app.kubernetes.io/instance: demo-chart
+---
+# Source: demo-chart/charts/microservice1/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice1
+  labels:
+    helm.sh/chart: microservice1-0.1.0
+    app.kubernetes.io/name: microservice1
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservice1
+      app.kubernetes.io/instance: demo-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: microservice1
+        app.kubernetes.io/instance: demo-chart
+    spec:
+      serviceAccountName: microservice1
+      securityContext:
+        {}
+      containers:
+        - name: microservice1
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: demo-chart/charts/microservice2/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice2
+  labels:
+    helm.sh/chart: microservice2-0.1.0
+    app.kubernetes.io/name: microservice2
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservice2
+      app.kubernetes.io/instance: demo-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: microservice2
+        app.kubernetes.io/instance: demo-chart
+    spec:
+      serviceAccountName: microservice2
+      securityContext:
+        {}
+      containers:
+        - name: microservice2
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: demo-chart/charts/microservice3/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice3
+  labels:
+    helm.sh/chart: microservice3-0.1.0
+    app.kubernetes.io/name: microservice3
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservice3
+      app.kubernetes.io/instance: demo-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: microservice3
+        app.kubernetes.io/instance: demo-chart
+    spec:
+      serviceAccountName: microservice3
+      securityContext:
+        {}
+      containers:
+        - name: microservice3
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: demo-chart/charts/microservice4/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice4
+  labels:
+    helm.sh/chart: microservice4-0.1.0
+    app.kubernetes.io/name: microservice4
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservice4
+      app.kubernetes.io/instance: demo-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: microservice4
+        app.kubernetes.io/instance: demo-chart
+    spec:
+      serviceAccountName: microservice4
+      securityContext:
+        {}
+      containers:
+        - name: microservice4
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: demo-chart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-chart
+  labels:
+    helm.sh/chart: demo-chart-0.1.0
+    app.kubernetes.io/name: demo-chart
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: demo-chart
+      app.kubernetes.io/instance: demo-chart
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: demo-chart
+        app.kubernetes.io/instance: demo-chart
+    spec:
+      serviceAccountName: demo-chart
+      securityContext:
+        {}
+      containers:
+        - name: demo-chart
+          securityContext:
+            {}
+          image: "nginx:1.16.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+---
+# Source: demo-chart/charts/microservice1/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "microservice1-test-connection"
+  labels:
+    helm.sh/chart: microservice1-0.1.0
+    app.kubernetes.io/name: microservice1
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['microservice1:80']
+  restartPolicy: Never
+---
+# Source: demo-chart/charts/microservice2/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "microservice2-test-connection"
+  labels:
+    helm.sh/chart: microservice2-0.1.0
+    app.kubernetes.io/name: microservice2
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['microservice2:80']
+  restartPolicy: Never
+---
+# Source: demo-chart/charts/microservice3/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "microservice3-test-connection"
+  labels:
+    helm.sh/chart: microservice3-0.1.0
+    app.kubernetes.io/name: microservice3
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['microservice3:80']
+  restartPolicy: Never
+---
+# Source: demo-chart/charts/microservice4/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "microservice4-test-connection"
+  labels:
+    helm.sh/chart: microservice4-0.1.0
+    app.kubernetes.io/name: microservice4
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['microservice4:80']
+  restartPolicy: Never
+---
+# Source: demo-chart/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "demo-chart-test-connection"
+  labels:
+    helm.sh/chart: demo-chart-0.1.0
+    app.kubernetes.io/name: demo-chart
+    app.kubernetes.io/instance: demo-chart
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['demo-chart:80']
+  restartPolicy: Never
