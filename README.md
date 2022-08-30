@@ -132,6 +132,8 @@ EOF
 4. Assuming that we want to install only microservice3 (out of 4 microservice), then we need to run the following command:
 ```shell
 sed 's/name: "ms_name.*"/name: "microservice3.*"/' demo-chart/kustomize/kustomization-base.yaml  | tee demo-chart/kustomize/kustomization.yaml | oc kustomize ./demo-chart/kustomize/ | oc apply -f - -l adhocInstall=true --dry-run=client -o yaml
+```
+```shell
 serviceaccount/microservice3 created
 service/microservice3 created
 deployment.apps/microservice3 created
@@ -143,9 +145,10 @@ pod/microservice3-test-connection created
 2. Assuming that you want to deploy only microservice4 (out of 4 microservices) then:
 ```shell
 export MS_NAME=microservice4;helm template demo-chart demo-chart/ | tr '\n' ";" | sed -E 's/[[:blank:]]{2}name:\s{1,2}'$MS_NAME'[a-zA-Z0-9\-]*;(  namespace: [a-zA-Z0-9\-]+;){0,1}\s{2}labels:\s*;/&    adhocInstall: "true";/g' | sed -E 's/[[:blank:]]{4}helm\.sh\/chart: '$MS_NAME'[-.a-zA-Z0-9]*;/&    adhocInstall: "true";/g' | tr ';' '\n' | oc apply -f - -l adhocInstall=true
+```
+```shell
 serviceaccount/microservice4 created
 service/microservice4 created
 deployment.apps/microservice4 created
 pod/microservice4-test-connection created
-
 ```
