@@ -152,3 +152,21 @@ service/microservice4 created
 deployment.apps/microservice4 created
 pod/microservice4-test-connection created
 ```
+
+### Solution using k8/openshift only
+ 1. In order to upgrade only part of chart(that contains a lot of deployments, and you want only 1 deployment to be installed/upgraded), suppose that you want to deploy/upgrade only deployment4, and you have 4 deployments -  deployment1-4, then use the following commands on all deployments that you want to delayed their rolling update procedure
+ ```shell
+ for deployment in {deploymentName1,deploymentName2,deploymentName3} 
+ do
+ oc rollout pause deployment $deployment
+ done
+ 
+ helm upgrade releaseName /path/to/chart -f /path/to/values.yaml
+  ```
+ 2. The former commands' execution will result with only deployment1 deployed, and deployments2-4 there won't be any triggering of a rolling update for them, but once you want to resume rollout for them at a more comfy time, kindly run
+ ```shell
+ for deployment in {deploymentName1,deploymentName2,deploymentName3} 
+ do
+ oc rollout resume deployment $deployment
+ done
+ ```
